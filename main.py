@@ -12,24 +12,24 @@ def priority(i):
         return 1
 
 
-def postfix(exp):
+def to_postfix(exp):
     queue = []
-    op_stack = []
+    operand_stack = []
     for token in exp:
         if token not in ('-', '+', '*', '/'):
             queue.append(token)
         elif token in ('-', '+', '*', '/'):
-            while op_stack and (priority(op_stack[-1]) >= priority(token)):
-                queue.append(op_stack.pop())
-            op_stack.append(token)
-    while op_stack:
-        queue.append(op_stack.pop())
+            while operand_stack and (priority(operand_stack[-1]) >= priority(token)):
+                queue.append(operand_stack.pop())
+            operand_stack.append(token)
+    while operand_stack:
+        queue.append(operand_stack.pop())
     return queue
 
 
-def calc(postfx):
+def calc(postfix):
     stack = []
-    for value in postfx:
+    for value in postfix:
         if value in ['-', '+', '*', '/']:
             o1 = stack.pop()
             o2 = stack.pop()
@@ -49,9 +49,9 @@ def calc(postfx):
 
 
 def calculate():
-    formula = input('> ')
-    tok_formula = formula.split(' ')
-    final_exp = postfix(tok_formula)
+    formula = input(' ')
+    token_formula = formula.split(' ')
+    final_exp = to_postfix(token_formula)
     print(calc(final_exp))
 
 
